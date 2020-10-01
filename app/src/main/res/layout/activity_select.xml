@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2B008E"
     tools:context=".SelectActivity">
 
     <EditText
@@ -17,30 +18,66 @@
         android:ems="10"
         android:hint="Enter your name"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/rightArrow"
-        android:layout_width="199dp"
-        android:layout_height="177dp"
+        android:layout_width="181dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
+        android:clickable="true"
         android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_flecha" />
 
     <ImageView
         android:id="@+id/leftArrow"
-        android:layout_width="199dp"
-        android:layout_height="177dp"
+        android:layout_width="181dp"
+        android:layout_height="151dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
+        android:clickable="true"
         android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_flechai" />
+
+    <Button
+        android:id="@+id/buttonReady"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginEnd="230dp"
+        android:layout_marginBottom="45dp"
+        android:background="#25B7B7"
+        android:text="Ready"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivNave"
+        android:layout_width="243dp"
+        android:layout_height="124dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonReady"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:srcCompat="@drawable/ic_nave_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
