@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMessageListener {
 
-    Button start;
+    private Button start;
+    private TCP_Singleton tcp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         start =findViewById(R.id.buttonStart);
+        tcp = TCP_Singleton.getInstance();
+        tcp.SetObserver(this);
+        tcp.start();
         start.setOnClickListener(
 
                 (v)->{
@@ -23,5 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
                 }
         );
+    }
+
+    @Override
+    public void OnMessage(String msg) {
+
     }
 }
