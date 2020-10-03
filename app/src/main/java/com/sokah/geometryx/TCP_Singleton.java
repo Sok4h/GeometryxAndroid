@@ -1,5 +1,7 @@
 package com.sokah.geometryx;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -13,15 +15,18 @@ import java.net.Socket;
 public class TCP_Singleton extends Thread{
     private static  TCP_Singleton tcp_singleton;
     private Socket socket;
+    private String ip;
+    private  int port;
     private BufferedWriter writer;
     private BufferedReader reader;
     private  InputStream is;
     private  OutputStream os;
+    boolean infoConection;
     private  OnMessageListener observer;
     //private OnMessageListener observer;
 
 
-    public TCP_Singleton() {
+    private TCP_Singleton() {
 
 
     }
@@ -41,25 +46,36 @@ public class TCP_Singleton extends Thread{
         this.observer=observer;
     }
 
+    public void SetIP_Port(String ip ,int port){
+      this.ip=ip;
+      this.port=port;
+      infoConection=true;
 
-    public void run (String ip,int port){
 
-        try {
-            socket = new Socket(ip,port);
-             is = socket.getInputStream();
-             os = socket.getOutputStream();
-            reader = new BufferedReader(new InputStreamReader(is));
+    }
 
-            while (true){
-                String line;
-                line =reader.readLine();
-                observer.OnMessage(line);
+    @Override
+    public void run() {
+
+        if(infoConection) {
+
+            try {
+                socket = new Socket(ip, port);
+                Log.e("TAG", "conectado");
+                is = socket.getInputStream();
+                os = socket.getOutputStream();
+                reader = new BufferedReader(new InputStreamReader(is));
+
+                while (true) {
+                    String line;
+                    line = reader.readLine();
+                    observer.OnMessage(line);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
     }
 
     public  void SendMessage(String message){
