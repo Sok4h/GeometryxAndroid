@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity implements OnMessageListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         start =findViewById(R.id.buttonStart);
-
         tcp = TCP_Singleton.getInstance();
         tcp.SetObserver(this);
         ip= findViewById(R.id.inputIp);
