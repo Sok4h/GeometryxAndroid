@@ -18,6 +18,8 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
     Button btnReady;
     EditText inputName;
     TCP_Singleton tcp;
+    String name,message;
+    User user;
     int currentSpaceShip = 0;
 
     @Override
@@ -84,6 +86,8 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
                 Log.e("TAG", "onClick: derecha" );
                 break;
 
+                //boton continuar
+
             case R.id.buttonReady:
 
                 Gson gson= new Gson();
@@ -92,17 +96,40 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
                     case 0:
 
-                        String name = inputName.getText().toString();
+                         name = inputName.getText().toString();
 
                         Triangletrix nave = new Triangletrix(100,100);
 
-                        User user = new User(name,nave);
-                        String message = gson.toJson(user);
+                        user = new User(name,nave);
+                        message = gson.toJson(user);
                         tcp.SendMessage(message);
 
                         break;
+                    case 1:
+                         name = inputName.getText().toString();
 
+                        Diamondrox diamondrox = new Diamondrox(100,100);
 
+                         user = new User(name,diamondrox);
+                        message = gson.toJson(user);
+                        tcp.SendMessage(message);
+                        break;
+                    case 2:
+                        name = inputName.getText().toString();
+
+                        Circletlex circletlex = new Circletlex(100,100);
+
+                        user = new User(name,circletlex);
+                        message = gson.toJson(user);
+                        tcp.SendMessage(message);
+                        break;
+                    case 3:
+                        name = inputName.getText().toString();
+                        Squarlux squarlux = new Squarlux(100,100);
+                        user = new User(name,squarlux);
+                        message = gson.toJson(user);
+                        tcp.SendMessage(message);
+                        break;
                 }
 
                 Intent intent = new Intent(this,GameActivity.class);
