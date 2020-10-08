@@ -7,23 +7,23 @@
     tools:context=".GameActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonSpecial"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#0DE7E7"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/buttonShoot"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonShoot"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FF3838"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/buttonSpecial"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
