@@ -59,13 +59,14 @@ public class TCP_Singleton extends Thread{
     @Override
     public void run() {
 
-        while(infoConection) {
+        if(infoConection) {
             Log.e("TAG", "entró");
             try {
                 socket = new Socket(this.ip, this.port);
 
                 is = socket.getInputStream();
                 os = socket.getOutputStream();
+                writer = new BufferedWriter(new OutputStreamWriter(os));
                 reader = new BufferedReader(new InputStreamReader(is));
 
                 while (true) {
@@ -86,7 +87,7 @@ public class TCP_Singleton extends Thread{
                 ()->{
 
                     try {
-                        writer.write(message);
+                        writer.write(message+"\n");
                         writer.flush();
                     } catch (IOException e) {
                         e.printStackTrace();

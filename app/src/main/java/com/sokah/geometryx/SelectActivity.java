@@ -2,16 +2,22 @@ package com.sokah.geometryx;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
-public class SelectActivity extends AppCompatActivity implements View.OnClickListener {
+import com.google.gson.Gson;
+
+public class SelectActivity extends AppCompatActivity implements View.OnClickListener,OnMessageListener {
 
     ImageView arrowL, arrowR,spacheship;
     Button btnReady;
+    EditText inputName;
+    TCP_Singleton tcp;
     int currentSpaceShip = 0;
 
     @Override
@@ -22,8 +28,12 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
         arrowR = findViewById(R.id.rightArrow);
         btnReady = findViewById(R.id.buttonReady);
         spacheship = findViewById(R.id.ivNave);
+        inputName = findViewById(R.id.inputName);
         arrowR.setClickable(true);
         arrowL.setClickable(true);
+        tcp= TCP_Singleton.getInstance();
+        tcp.SetObserver(this);
+        btnReady.setOnClickListener(this);
         arrowL.setOnClickListener(this);
         arrowR.setOnClickListener(this);
 
@@ -76,13 +86,33 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.buttonReady:
 
+                Gson gson= new Gson();
+
+                switch (currentSpaceShip){
+
+                    case 0:
+
+                        String name = inputName.getText().toString();
+
+                        Triangletrix nave = new Triangletrix(100,100);
+
+                        User user = new User(name,nave);
+                        String message = gson.toJson(user);
+                        tcp.SendMessage(message);
+
+                        break;
 
 
+                }
+
+                Intent intent = new Intent(this,GameActivity.class);
+                startActivity(intent);
                // Log.e("TAG", "onClick:  button" );
                 break;
             default:
 
                 break;
+
         }
     }
 
@@ -114,6 +144,11 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
 
         }
+
+    }
+
+    @Override
+    public void OnMessage(String msg) {
 
     }
 }
