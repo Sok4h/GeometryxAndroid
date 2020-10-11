@@ -14,15 +14,15 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".GameActivity"
+        <activity android:name=".view.GameActivity"
             android:screenOrientation="landscape"
             />
         <activity
-            android:name=".SelectActivity"
+            android:name=".view.SelectActivity"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

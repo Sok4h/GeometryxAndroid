@@ -1,6 +1,6 @@
-package com.sokah.geometryx;
+package com.sokah.geometryx.model;
 
-public class Triangletrix extends SpaceShip{
+public class Triangletrix extends SpaceShip {
 
 	private String type= "Triangletrix";
 	public Triangletrix(int posx, int posy) {

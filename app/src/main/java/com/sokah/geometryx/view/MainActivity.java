@@ -1,11 +1,15 @@
-package com.sokah.geometryx;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.sokah.geometryx.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.sokah.geometryx.events.OnMessageListener;
+import com.sokah.geometryx.R;
+import com.sokah.geometryx.comunnication.TCP_Singleton;
 
 public class MainActivity extends AppCompatActivity implements OnMessageListener {
 
@@ -26,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnMessageListener
 
                 (v)->{
 
-                    Intent intent = new Intent(this,SelectActivity.class);
+                    Intent intent = new Intent(this, SelectActivity.class);
                    //tcp.SetIP_Port(ip.getText().toString(),Integer.parseInt(port.getText().toString()));
                     tcp.SetIP_Port("192.168.0.11",5000);
                     startActivity(intent);

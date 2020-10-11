@@ -1,6 +1,4 @@
-package com.sokah.geometryx;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.sokah.geometryx.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +8,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.google.gson.Gson;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class SelectActivity extends AppCompatActivity implements View.OnClickListener,OnMessageListener {
+import com.google.gson.Gson;
+import com.sokah.geometryx.events.OnMessageListener;
+import com.sokah.geometryx.R;
+import com.sokah.geometryx.comunnication.TCP_Singleton;
+import com.sokah.geometryx.model.Circletlex;
+import com.sokah.geometryx.model.Diamondrox;
+import com.sokah.geometryx.model.Squarlux;
+import com.sokah.geometryx.model.Triangletrix;
+import com.sokah.geometryx.model.User;
+
+public class SelectActivity extends AppCompatActivity implements View.OnClickListener, OnMessageListener {
 
     ImageView arrowL, arrowR,spacheship;
     Button btnReady;
@@ -132,7 +140,7 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
                         break;
                 }
 
-                Intent intent = new Intent(this,GameActivity.class);
+                Intent intent = new Intent(this, GameActivity.class);
                 startActivity(intent);
                // Log.e("TAG", "onClick:  button" );
                 break;

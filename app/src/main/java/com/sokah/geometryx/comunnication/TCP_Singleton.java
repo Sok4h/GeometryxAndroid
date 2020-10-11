@@ -1,6 +1,8 @@
-package com.sokah.geometryx;
+package com.sokah.geometryx.comunnication;
 
 import android.util.Log;
+
+import com.sokah.geometryx.events.OnMessageListener;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,7 +24,7 @@ public class TCP_Singleton extends Thread{
     private  InputStream is;
     private  OutputStream os;
     boolean infoConection;
-    private  OnMessageListener observer;
+    private OnMessageListener observer;
     //private OnMessageListener observer;
 
 

@@ -1,4 +1,4 @@
-package com.sokah.geometryx;
+package com.sokah.geometryx.model;
 
 public class Shoot {
 	

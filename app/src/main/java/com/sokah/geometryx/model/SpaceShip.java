@@ -1,6 +1,4 @@
-package com.sokah.geometryx;
-
-import java.util.ArrayList;
+package com.sokah.geometryx.model;
 
 public abstract class SpaceShip {
 	protected int vida;
