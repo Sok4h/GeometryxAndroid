@@ -15,9 +15,7 @@ public class Direction {
 		type = "Direction";
 		
 	}
-	public Direction() {
-		
-	}
+
 	public String getId() {
 		return id;
 	}

@@ -96,72 +96,102 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         //Log.e("Y", String.valueOf(event.values[1]));
         //Log.e("Z", String.valueOf(event.values[2]));
         float x= event.values[1];
+        float y= event.values[0];
+
+        //Log.e("TAG", String.valueOf(y)+" Abajo");
+
+                    new Thread(
+
+                            ()->{
+
+                                boolean senx=true;
+                                while (senx) {
+                                    if (x < -4) {
 
 
-        new Thread(
-                () -> {
-                    boolean moveX = true;
+                                        Direction dir = new Direction(-1);
+                                        String msgDir = gson.toJson(dir);
 
-                    while (moveX) {
-                        if (x > 4) {
+                                        tcp.SendMessage(msgDir);
 
 
-                            Log.e("TAG", "Me muevo derecha");
-                            Direction dir = new Direction(-1);
-                            String msgDir = gson.toJson(dir);
-                            tcp.SendMessage(msgDir);
-                        } else if (x < -4) {
+                                    } else if (x > 4) {
 
-                            Log.e("TAG", "Me muevo izquierda");
-                            Direction dir = new Direction(1);
-                            String msgDir = gson.toJson(dir);
-                            tcp.SendMessage(msgDir);
-                        } else {
-                            moveX = false;
-                        }
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                                        Log.e("TAG", "Me muevo derecha");
+                                        Direction dir = new Direction(1);
+                                        String msgDir = gson.toJson(dir);
+                                        tcp.SendMessage(msgDir);
+
+                                    } else {
+
+                                        // shoot.setVisibility(View.VISIBLE);
+                                        //superShoot.setVisibility(View.VISIBLE);
+                                        senx=false;
+                                    }
+
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                    ).start();
+
+
+                    //sensor arriba y abajo
+                        new Thread(
+
+                                ()->{
+
+                                    boolean seny=true;
+
+                                    while (seny) {
+
+                                        try {
+                                            Thread.sleep(500);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        if (y < 2) {
+
+                                            Log.e("TAG", "Menor a 2");
+                                            Direction dir = new Direction(-2);
+                                            String msgDir = gson.toJson(dir);
+                                            //Log.e("TAG", String.valueOf(y));
+
+
+
+
+                                            //tcp.SendMessage(msgDir);
+                                        } else if (y >2 ) {
+
+                                            //Log.e("TAG", "Me muevo arriba");
+                                            Direction dir = new Direction(2);
+                                            String msgDir = gson.toJson(dir);
+                                            //tcp.SendMessage(msgDir);
+                                            Log.e("TAG"," mayor a 2");
+
+
+                                        }
+                                        else {
+
+                                            seny=false;
+                                        }
+                                        try {
+                                            Thread.sleep(500);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                        ).start();
+
                     }
-                }
 
-        ).start();
 
-       /*/ new Thread(
-                () -> {
-                    boolean movey = true;
-
-                    while (movey) {
-
-                        if (event.values[2] > -3) {
-
-                            Log.e("TAG", "Me muevo Arriba");
-                            Direction dir = new Direction(2);
-                            String msgDir = gson.toJson(dir);
-                            tcp.SendMessage(msgDir);
-                        } else if (event.values[2] < 3) {
-
-                            Log.e("TAG", "Me muevo Abajo");
-                            Direction dir = new Direction(-2);
-                            String msgDir = gson.toJson(dir);
-                            tcp.SendMessage(msgDir);
-                        } else {
-                            movey = false;
-                        }
-
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-        ).start();
-        */
-    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#000000"
     tools:context=".view.MainActivity">
-
+    
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="0dp"
