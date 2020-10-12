@@ -1,6 +1,8 @@
 package com.sokah.geometryx.comunnication;
 
+import com.google.gson.Gson;
 import com.sokah.geometryx.events.OnMessageListener;
+import com.sokah.geometryx.model.Vibration;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,6 +25,7 @@ public class TCP_Singleton extends Thread{
     private  OutputStream os;
     boolean infoConection;
     private OnMessageListener observer;
+    private Gson gson;
 
     private TCP_Singleton() {
 
@@ -48,6 +51,7 @@ public class TCP_Singleton extends Thread{
       infoConection=true;
         tcp_singleton.start();
        // Log.e("TAG", infoConection+"" );
+        gson= new Gson();
     }
 
     @Override
@@ -67,7 +71,12 @@ public class TCP_Singleton extends Thread{
                 while (true) {
                     String line;
                     line = reader.readLine();
-                    observer.OnMessage(line);
+                    if(line.contains("Vibration")){
+
+                        //gson.fromJson(line, Vibration.class);
+                        observer.OnImpact();
+
+                    }
                 }
 
             } catch (IOException e) {

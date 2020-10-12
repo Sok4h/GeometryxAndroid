@@ -178,8 +178,9 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+
     @Override
-    public void OnMessage(String msg) {
+    public void OnImpact() {
 
     }
 }

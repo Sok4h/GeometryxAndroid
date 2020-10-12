@@ -6,6 +6,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,6 +21,7 @@ import com.sokah.geometryx.comunnication.TCP_Singleton;
 import com.sokah.geometryx.events.OnMessageListener;
 import com.sokah.geometryx.model.Direction;
 import com.sokah.geometryx.model.Shoot;
+import com.sokah.geometryx.model.Vibration;
 
 public class GameActivity extends AppCompatActivity implements OnMessageListener, SensorEventListener {
 
@@ -27,6 +30,7 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     private TCP_Singleton tcp;
     private SensorManager sensorManager;
     private Sensor acelerometer;
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         tcp = TCP_Singleton.getInstance();
         tcp.SetObserver(this);
         acelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -82,10 +87,7 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    @Override
-    public void OnMessage(String msg) {
 
-    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -93,72 +95,84 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         //.e("X", String.valueOf(event.values[0]));
         //Log.e("Y", String.valueOf(event.values[1]));
         //Log.e("Z", String.valueOf(event.values[2]));
+        float x= event.values[1];
 
 
         new Thread(
                 () -> {
                     boolean moveX = true;
 
-                    if (event.values[1] > -3) {
+                    while (moveX) {
+                        if (x > 4) {
 
 
-                        Log.e("TAG", "Me muevo derecha");
-                        Direction dir = new Direction(1);
-                        String msgDir = gson.toJson(dir);
-                        tcp.SendMessage(msgDir);
-                    } else if (event.values[1] < 3) {
+                            Log.e("TAG", "Me muevo derecha");
+                            Direction dir = new Direction(-1);
+                            String msgDir = gson.toJson(dir);
+                            tcp.SendMessage(msgDir);
+                        } else if (x < -4) {
 
-                        Log.e("TAG", "Me muevo izquierda");
-                        Direction dir = new Direction(-1);
-                        String msgDir = gson.toJson(dir);
-                        tcp.SendMessage(msgDir);
-                    }else{
-                        moveX = false;
-                    }
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                            Log.e("TAG", "Me muevo izquierda");
+                            Direction dir = new Direction(1);
+                            String msgDir = gson.toJson(dir);
+                            tcp.SendMessage(msgDir);
+                        } else {
+                            moveX = false;
+                        }
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
         ).start();
 
-        new Thread(
+       /*/ new Thread(
                 () -> {
                     boolean movey = true;
 
-                    while(movey)
+                    while (movey) {
 
-                    if (event.values[0] > -3) {
+                        if (event.values[2] > -3) {
 
-                        Log.e("TAG", "Me muevo Arriba");
-                        Direction dir = new Direction(2);
-                        String msgDir = gson.toJson(dir);
-                        tcp.SendMessage(msgDir);
-                    } else if (event.values[0] < 3) {
+                            Log.e("TAG", "Me muevo Arriba");
+                            Direction dir = new Direction(2);
+                            String msgDir = gson.toJson(dir);
+                            tcp.SendMessage(msgDir);
+                        } else if (event.values[2] < 3) {
 
-                        Log.e("TAG", "Me muevo Abajo");
-                        Direction dir = new Direction(-2);
-                        String msgDir = gson.toJson(dir);
-                        tcp.SendMessage(msgDir);
-                    }else{
-                        movey = false;
-                    }
+                            Log.e("TAG", "Me muevo Abajo");
+                            Direction dir = new Direction(-2);
+                            String msgDir = gson.toJson(dir);
+                            tcp.SendMessage(msgDir);
+                        } else {
+                            movey = false;
+                        }
 
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
         ).start();
-        
+        */
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void OnImpact() {
+
+        vibrator.vibrate(200);
+
 
     }
 }
