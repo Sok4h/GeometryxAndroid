@@ -23,11 +23,8 @@ public class TCP_Singleton extends Thread{
     private  OutputStream os;
     boolean infoConection;
     private  OnMessageListener observer;
-    //private OnMessageListener observer;
-
 
     private TCP_Singleton() {
-
 
     }
 
@@ -36,7 +33,6 @@ public class TCP_Singleton extends Thread{
         if(tcp_singleton == null){
 
             tcp_singleton= new TCP_Singleton();
-
         }
        return tcp_singleton;
     }
@@ -51,16 +47,14 @@ public class TCP_Singleton extends Thread{
       this.port=port;
       infoConection=true;
         tcp_singleton.start();
-        Log.e("TAG", infoConection+"" );
-
-
+       // Log.e("TAG", infoConection+"" );
     }
 
     @Override
     public void run() {
 
         if(infoConection) {
-            Log.e("TAG", "entró");
+           // Log.e("TAG", "entró");
             try {
                 socket = new Socket(this.ip, this.port);
 
