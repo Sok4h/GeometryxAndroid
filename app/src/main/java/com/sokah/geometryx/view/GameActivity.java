@@ -1,4 +1,4 @@
-package com.sokah.geometryx;
+package com.sokah.geometryx.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +14,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.gson.Gson;
+import com.sokah.geometryx.R;
+import com.sokah.geometryx.comunnication.TCP_Singleton;
+import com.sokah.geometryx.events.OnMessageListener;
+import com.sokah.geometryx.model.Shoot;
 
-public class GameActivity extends AppCompatActivity  implements OnMessageListener , SensorEventListener {
+public class GameActivity extends AppCompatActivity  implements OnMessageListener, SensorEventListener {
 
     private Button shoot,superShoot;
     private Gson gson = new Gson();
