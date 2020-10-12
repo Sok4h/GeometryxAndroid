@@ -14,10 +14,6 @@ import com.google.gson.Gson;
 import com.sokah.geometryx.events.OnMessageListener;
 import com.sokah.geometryx.R;
 import com.sokah.geometryx.comunnication.TCP_Singleton;
-import com.sokah.geometryx.model.Circletlex;
-import com.sokah.geometryx.model.Diamondrox;
-import com.sokah.geometryx.model.Squarlux;
-import com.sokah.geometryx.model.Triangletrix;
 import com.sokah.geometryx.model.User;
 
 public class SelectActivity extends AppCompatActivity implements View.OnClickListener, OnMessageListener {
@@ -106,9 +102,9 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
                          name = inputName.getText().toString();
 
-                        Triangletrix nave = new Triangletrix(100,100);
 
-                        user = new User(name,nave);
+
+                        user = new User(name,0);
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
 
@@ -116,25 +112,25 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
                     case 1:
                          name = inputName.getText().toString();
 
-                        Diamondrox diamondrox = new Diamondrox(100,100);
 
-                         user = new User(name,diamondrox);
+
+                         user = new User(name,1);
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
                         break;
                     case 2:
                         name = inputName.getText().toString();
 
-                        Circletlex circletlex = new Circletlex(100,100);
 
-                        user = new User(name,circletlex);
+
+                        user = new User(name,2);
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
                         break;
                     case 3:
                         name = inputName.getText().toString();
-                        Squarlux squarlux = new Squarlux(100,100);
-                        user = new User(name,squarlux);
+
+                        user = new User(name,3);
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
                         break;

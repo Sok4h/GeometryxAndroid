@@ -16,7 +16,8 @@
 
         <activity android:name=".view.GameActivity"
             android:screenOrientation="landscape"
-            />
+            tools:ignore="LockedOrientationActivity" />
+            
         <activity
             android:name=".view.SelectActivity"
             android:screenOrientation="landscape"

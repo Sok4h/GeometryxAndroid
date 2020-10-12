@@ -1,7 +1,5 @@
 package com.sokah.geometryx.comunnication;
 
-import android.util.Log;
-
 import com.sokah.geometryx.events.OnMessageListener;
 
 import java.io.BufferedReader;
@@ -59,6 +57,7 @@ public class TCP_Singleton extends Thread{
            // Log.e("TAG", "entró");
             try {
                 socket = new Socket(this.ip, this.port);
+                socket.setTcpNoDelay(true);
 
                 is = socket.getInputStream();
                 os = socket.getOutputStream();

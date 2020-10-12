@@ -4,9 +4,9 @@ public class User {
 
     private String type="User";
     private  String name;
-    private SpaceShip spaceShip;
+    private int spaceShip;
 
-    public User(String name, SpaceShip spaceShip) {
+    public User(String name, int spaceShip) {
         this.name = name;
         this.spaceShip = spaceShip;
     }
