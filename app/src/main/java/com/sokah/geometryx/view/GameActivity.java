@@ -92,12 +92,13 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        //.e("X", String.valueOf(event.values[0]));
-        //Log.e("Y", String.valueOf(event.values[1]));
-        //Log.e("Z", String.valueOf(event.values[2]));
+        Log.e("X", String.valueOf(event.values[0]));
+        Log.e("Y", String.valueOf(event.values[1]));
+        Log.e("Z", String.valueOf(event.values[2]));
         float x= event.values[1];
-        float y= event.values[0];
+        float y= event.values[2];
 
+        //Log.e(TAG, x + );
         //Log.e("TAG", String.valueOf(y)+" Abajo");
 
                     new Thread(
@@ -106,8 +107,7 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
 
                                 boolean senx=true;
                                 while (senx) {
-                                    if (x < -4) {
-
+                                    if (x < -2) {
 
                                         Direction dir = new Direction(-1);
                                         String msgDir = gson.toJson(dir);
@@ -115,15 +115,14 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
                                         tcp.SendMessage(msgDir);
 
 
-                                    } else if (x > 4) {
+                                    } else if (x > 2) {
 
-                                        Log.e("TAG", "Me muevo derecha");
+                                        //Log.e("TAG", "Me muevo derecha");
                                         Direction dir = new Direction(1);
                                         String msgDir = gson.toJson(dir);
                                         tcp.SendMessage(msgDir);
 
                                     } else {
-
                                         // shoot.setVisibility(View.VISIBLE);
                                         //superShoot.setVisibility(View.VISIBLE);
                                         senx=false;
@@ -154,29 +153,24 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
                                         } catch (InterruptedException e) {
                                             e.printStackTrace();
                                         }
-                                        if (y < 2) {
+                                        if (y < -2) {
 
-                                            Log.e("TAG", "Menor a 2");
+                                           // Log.e("TAG", "Menor a 2");
                                             Direction dir = new Direction(-2);
                                             String msgDir = gson.toJson(dir);
                                             //Log.e("TAG", String.valueOf(y));
-
-
-
-
-                                            //tcp.SendMessage(msgDir);
+                                            tcp.SendMessage(msgDir);
                                         } else if (y >2 ) {
 
                                             //Log.e("TAG", "Me muevo arriba");
                                             Direction dir = new Direction(2);
                                             String msgDir = gson.toJson(dir);
-                                            //tcp.SendMessage(msgDir);
-                                            Log.e("TAG"," mayor a 2");
+                                            tcp.SendMessage(msgDir);
+                                            //Log.e("TAG"," mayor a 2");
 
 
                                         }
                                         else {
-
                                             seny=false;
                                         }
                                         try {
@@ -190,6 +184,9 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
                         ).start();
 
                     }
+
+
+
 
 
 

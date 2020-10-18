@@ -92,6 +92,8 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
                 //boton continuar
 
+
+
             case R.id.buttonReady:
 
                 Gson gson= new Gson();
@@ -135,6 +137,9 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
                         tcp.SendMessage(message);
                         break;
                 }
+
+
+
 
                 Intent intent = new Intent(this, GameActivity.class);
                 startActivity(intent);

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements OnMessageListener
 
                     Intent intent = new Intent(this, SelectActivity.class);
                    //tcp.SetIP_Port(ip.getText().toString(),Integer.parseInt(port.getText().toString()));
-                    tcp.SetIP_Port("192.168.0.11",5000);
+                   tcp.SetIP_Port("192.168.0.11",5000);
                     startActivity(intent);
 
                 }
