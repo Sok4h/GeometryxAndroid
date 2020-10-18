@@ -6,7 +6,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +19,8 @@ import com.sokah.geometryx.R;
 import com.sokah.geometryx.comunnication.TCP_Singleton;
 import com.sokah.geometryx.events.OnMessageListener;
 import com.sokah.geometryx.model.Direction;
+import com.sokah.geometryx.model.GameManager;
 import com.sokah.geometryx.model.Shoot;
-import com.sokah.geometryx.model.Vibration;
 
 public class GameActivity extends AppCompatActivity implements OnMessageListener, SensorEventListener {
 
@@ -30,8 +29,9 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     private TCP_Singleton tcp;
     private SensorManager sensorManager;
     private Sensor acelerometer;
+    private GameManager gameManager;
     private Vibrator vibrator;
-
+    private float posX,posY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +42,9 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         tcp = TCP_Singleton.getInstance();
         tcp.SetObserver(this);
+        gameManager= new GameManager();
+        gameManager.setGameActivity(this);
+        //gameManager.start();
         acelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         if (acelerometer == null) {
@@ -87,103 +90,124 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    public float getPosX() {
+        return posX;
+    }
 
+    public void setPosX(float posX) {
+        this.posX = posX;
+    }
+
+    public float getPosY() {
+        return posY;
+    }
+
+    public void setPosY(float posY) {
+        this.posY = posY;
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        Log.e("X", String.valueOf(event.values[0]));
+       /* Log.e("X", String.valueOf(event.values[0]));
         Log.e("Y", String.valueOf(event.values[1]));
         Log.e("Z", String.valueOf(event.values[2]));
-        float x= event.values[1];
+*/
+         float x= event.values[1];
         float y= event.values[2];
 
-        //Log.e(TAG, x + );
-        //Log.e("TAG", String.valueOf(y)+" Abajo");
 
-                    new Thread(
+        new Thread(
 
-                            ()->{
-
-                                boolean senx=true;
-                                while (senx) {
-                                    if (x < -2) {
-
-                                        Direction dir = new Direction(-1);
-                                        String msgDir = gson.toJson(dir);
-
-                                        tcp.SendMessage(msgDir);
+                ()->{
 
 
-                                    } else if (x > 2) {
 
-                                        //Log.e("TAG", "Me muevo derecha");
-                                        Direction dir = new Direction(1);
-                                        String msgDir = gson.toJson(dir);
-                                        tcp.SendMessage(msgDir);
+                    boolean senx=true;
+                    while (senx) {
+                        if (x < -2) {
+                            gameManager.VerifySensor(-1);
+                            Direction dir = new Direction(-1);
+                            String msgDir = gson.toJson(dir);
 
-                                    } else {
-                                        // shoot.setVisibility(View.VISIBLE);
-                                        //superShoot.setVisibility(View.VISIBLE);
-                                        senx=false;
-                                    }
-
-                                    try {
-                                        Thread.sleep(500);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-
-                    ).start();
+                            //tcp.SendMessage(msgDir);
 
 
-                    //sensor arriba y abajo
-                        new Thread(
+                        } else if (x > 2) {
 
-                                ()->{
+                            gameManager.VerifySensor(1);
 
-                                    boolean seny=true;
+                            //Log.e("TAG", "Me muevo derecha");
+                            Direction dir = new Direction(1);
+                            String msgDir = gson.toJson(dir);
+                            //tcp.SendMessage(msgDir);
 
-                                    while (seny) {
+                        } else {
+                            // shoot.setVisibility(View.VISIBLE);
+                            //superShoot.setVisibility(View.VISIBLE);
+                            senx=false;
+                        }
 
-                                        try {
-                                            Thread.sleep(500);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        if (y < -2) {
-
-                                           // Log.e("TAG", "Menor a 2");
-                                            Direction dir = new Direction(-2);
-                                            String msgDir = gson.toJson(dir);
-                                            //Log.e("TAG", String.valueOf(y));
-                                            tcp.SendMessage(msgDir);
-                                        } else if (y >2 ) {
-
-                                            //Log.e("TAG", "Me muevo arriba");
-                                            Direction dir = new Direction(2);
-                                            String msgDir = gson.toJson(dir);
-                                            tcp.SendMessage(msgDir);
-                                            //Log.e("TAG"," mayor a 2");
-
-
-                                        }
-                                        else {
-                                            seny=false;
-                                        }
-                                        try {
-                                            Thread.sleep(500);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-
-                        ).start();
-
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+                }
+
+        ).start();
+
+
+        //sensor arriba y abajo
+        new Thread(
+
+                ()->{
+
+                    boolean seny=true;
+
+                    while (seny) {
+
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (y < -2) {
+
+                            gameManager.VerifySensor(-2);
+
+                            // Log.e("TAG", "Menor a 2");
+                            Direction dir = new Direction(-2);
+                            String msgDir = gson.toJson(dir);
+                            //Log.e("TAG", String.valueOf(y));
+                            //tcp.SendMessage(msgDir);
+                        } else if (y >2 ) {
+
+                            gameManager.VerifySensor(2);
+                            //Log.e("TAG", "Me muevo arriba");
+                            Direction dir = new Direction(2);
+                            String msgDir = gson.toJson(dir);
+                            //tcp.SendMessage(msgDir);
+                            //Log.e("TAG"," mayor a 2");
+
+
+                        }
+                        else {
+                            seny=false;
+                        }
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+        ).start();
+
+
+    }
 
 
 
@@ -199,7 +223,6 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     public void OnImpact() {
 
         vibrator.vibrate(200);
-
 
     }
 }
