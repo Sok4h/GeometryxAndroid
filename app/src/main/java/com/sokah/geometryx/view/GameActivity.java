@@ -98,90 +98,72 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         float x= event.values[1];
         float y= event.values[2];
 
-        //Log.e(TAG, x + );
-        //Log.e("TAG", String.valueOf(y)+" Abajo");
+
+        new Thread(
+                ()-> {
+                    if (x < -2) {
+
+                            Direction dir = new Direction(-1);
+                            String msgDir = gson.toJson(dir);
+
+                            tcp.SendMessage(msgDir);
+
+                        }
+                    else if (x > 2) {
+
+                            //Log.e("TAG", "Me muevo derecha");
+                            Direction dir = new Direction(1);
+                            String msgDir = gson.toJson(dir);
+                            tcp.SendMessage(msgDir);
+
+                        } else {
+                            // shoot.setVisibility(View.VISIBLE);
+                            //superShoot.setVisibility(View.VISIBLE);
+                            Log.e("TAG", "onSensorChanged: ni izquierda ni derecha ");
+                            Direction dir = new Direction(0);
+                            String msgDir = gson.toJson(dir);
+                            tcp.SendMessage(msgDir);
+
+                        }try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    ).start();
 
                     new Thread(
 
                             ()->{
 
-                                boolean senx=true;
-                                while (senx) {
-                                    if (x < -2) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                if (y < -2) {
 
-                                        Direction dir = new Direction(-1);
-                                        String msgDir = gson.toJson(dir);
+                                    Direction dir = new Direction(-2);
+                                    String msgDir = gson.toJson(dir);
+                                    tcp.SendMessage(msgDir);
 
-                                        tcp.SendMessage(msgDir);
+                                } else if (y >2 ) {
+                                    Direction dir = new Direction(2);
+                                    String msgDir = gson.toJson(dir);
+                                    tcp.SendMessage(msgDir);
 
 
-                                    } else if (x > 2) {
+                                }
+                                else {
+                                    Direction dir = new Direction(0);
+                                    String msgDir = gson.toJson(dir);
+                                    tcp.SendMessage(msgDir);
 
-                                        //Log.e("TAG", "Me muevo derecha");
-                                        Direction dir = new Direction(1);
-                                        String msgDir = gson.toJson(dir);
-                                        tcp.SendMessage(msgDir);
-
-                                    } else {
-                                        // shoot.setVisibility(View.VISIBLE);
-                                        //superShoot.setVisibility(View.VISIBLE);
-                                        senx=false;
-                                    }
-
-                                    try {
-                                        Thread.sleep(500);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
                                 }
                             }
-
                     ).start();
-
-
-                    //sensor arriba y abajo
-                        new Thread(
-
-                                ()->{
-
-                                    boolean seny=true;
-
-                                    while (seny) {
-
-                                        try {
-                                            Thread.sleep(500);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        if (y < -2) {
-
-                                           // Log.e("TAG", "Menor a 2");
-                                            Direction dir = new Direction(-2);
-                                            String msgDir = gson.toJson(dir);
-                                            //Log.e("TAG", String.valueOf(y));
-                                            tcp.SendMessage(msgDir);
-                                        } else if (y >2 ) {
-
-                                            //Log.e("TAG", "Me muevo arriba");
-                                            Direction dir = new Direction(2);
-                                            String msgDir = gson.toJson(dir);
-                                            tcp.SendMessage(msgDir);
-                                            //Log.e("TAG"," mayor a 2");
-
-
-                                        }
-                                        else {
-                                            seny=false;
-                                        }
-                                        try {
-                                            Thread.sleep(500);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-
-                        ).start();
 
                     }
 
@@ -199,7 +181,6 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     public void OnImpact() {
 
         vibrator.vibrate(200);
-
 
     }
 }
