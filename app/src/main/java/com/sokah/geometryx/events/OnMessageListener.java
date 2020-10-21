@@ -5,5 +5,6 @@ import com.sokah.geometryx.model.Vibration;
 public interface OnMessageListener {
 	
 	void OnImpact();
+	void OnConfirmation();
 	
 }

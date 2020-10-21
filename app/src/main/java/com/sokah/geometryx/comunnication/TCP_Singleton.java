@@ -49,7 +49,7 @@ public class TCP_Singleton extends Thread{
       this.ip=ip;
       this.port=port;
       infoConection=true;
-        tcp_singleton.start();
+      tcp_singleton.start();
        // Log.e("TAG", infoConection+"" );
         gson= new Gson();
     }
@@ -71,6 +71,10 @@ public class TCP_Singleton extends Thread{
                 while (true) {
                     String line;
                     line = reader.readLine();
+                    if(line.contains("Confirmation")){
+
+                        observer.OnConfirmation();
+                    }
                     if(line.contains("Vibration")){
 
                         //gson.fromJson(line, Vibration.class);

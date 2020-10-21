@@ -54,7 +54,7 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
                 //codigo flecha izquierda
 
-                Log.e("TAG", "onClick: izquierda" );
+                //Log.e("TAG", "onClick: izquierda" );
 
                if(currentSpaceShip==0){
 
@@ -83,11 +83,11 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
                     currentSpaceShip++;
                 }
 
-                Log.e("TAG", String.valueOf(currentSpaceShip));
+                //Log.e("TAG", String.valueOf(currentSpaceShip));
 
                 SetSpaceship();
 
-                Log.e("TAG", "onClick: derecha" );
+               //Log.e("TAG", "onClick: derecha" );
                 break;
 
                 //boton continuar
@@ -104,34 +104,29 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
                          name = inputName.getText().toString();
 
-
-
                         user = new User(name,0);
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
+                        Log.e("TAG", "Azul" );
 
                         break;
                     case 1:
                          name = inputName.getText().toString();
-
-
-
                          user = new User(name,1);
+                        Log.e("TAG", "NARANJA" );
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
                         break;
                     case 2:
                         name = inputName.getText().toString();
-
-
-
                         user = new User(name,2);
+                        Log.e("TAG", "morado" );
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
                         break;
                     case 3:
                         name = inputName.getText().toString();
-
+                        Log.e("TAG", String.valueOf(currentSpaceShip));
                         user = new User(name,3);
                         message = gson.toJson(user);
                         tcp.SendMessage(message);
@@ -141,7 +136,7 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
-                Intent intent = new Intent(this, GameActivity.class);
+                Intent intent = new Intent(this, LoadingActivity.class);
                 startActivity(intent);
                // Log.e("TAG", "onClick:  button" );
                 break;
@@ -186,6 +181,11 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void OnImpact() {
+
+    }
+
+    @Override
+    public void OnConfirmation() {
 
     }
 }

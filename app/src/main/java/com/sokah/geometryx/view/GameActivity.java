@@ -92,12 +92,8 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        Log.e("X", String.valueOf(event.values[0]));
-        Log.e("Y", String.valueOf(event.values[1]));
-        Log.e("Z", String.valueOf(event.values[2]));
         float x= event.values[1];
         float y= event.values[2];
-
 
         new Thread(
                 ()-> {
@@ -119,7 +115,7 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
                         } else {
                             // shoot.setVisibility(View.VISIBLE);
                             //superShoot.setVisibility(View.VISIBLE);
-                            Log.e("TAG", "onSensorChanged: ni izquierda ni derecha ");
+                            //Log.e("TAG", "onSensorChanged: ni izquierda ni derecha ");
                             Direction dir = new Direction(0);
                             String msgDir = gson.toJson(dir);
                             tcp.SendMessage(msgDir);
@@ -167,11 +163,6 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
 
                     }
 
-
-
-
-
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
@@ -181,6 +172,11 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     public void OnImpact() {
 
         vibrator.vibrate(200);
+
+    }
+
+    @Override
+    public void OnConfirmation() {
 
     }
 }

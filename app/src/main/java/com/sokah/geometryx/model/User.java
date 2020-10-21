@@ -4,11 +4,11 @@ public class User {
 
     private String type="User";
     private  String name;
-    private int spaceShip;
+    private int tspaceship;
 
-    public User(String name, int spaceShip) {
+    public User(String name, int tspaceship) {
         this.name = name;
-        this.spaceShip = spaceShip;
+        this.tspaceship = tspaceship;
     }
 
     public String getType() {

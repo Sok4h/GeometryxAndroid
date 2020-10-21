@@ -4,7 +4,7 @@
     package="com.sokah.geometryx">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -13,12 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity android:name=".view.GameActivity"
+        <activity android:name=".view.LoadingActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity
+            android:name=".view.GameActivity"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity" />
-            
         <activity
             android:name=".view.SelectActivity"
             android:screenOrientation="landscape"
