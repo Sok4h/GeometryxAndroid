@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         tcp = TCP_Singleton.getInstance();
         tcp.SetObserver(this);
         acelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_GAME);
         if (acelerometer == null) {
 
             Log.e("TAG", "paila el sensor");
@@ -61,21 +61,16 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
                     Shoot tempShoot = new Shoot();
                     String message = gson.toJson(tempShoot);
                     tcp.SendMessage(message);
-                    //Log.e("TAG", "Disparé");
-
                 }
         );
 
         superShoot.setOnClickListener(
 
                 (v) -> {
-
                     Shoot tempShoot = new Shoot();
                     tempShoot.setSuperShoot(true);
                     String message = gson.toJson(tempShoot);
                     tcp.SendMessage(message);
-                    //Log.e("TAG", "Disparé super" );
-
                 }
         );
     }
@@ -84,7 +79,7 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
 
@@ -95,47 +90,43 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         float x= event.values[1];
         float y= event.values[2];
 
-        new Thread(
-                ()-> {
-                    if (x < -2) {
+            new Thread(
+                    () -> {
+                        if (x < -2) {
 
                             Direction dir = new Direction(-1);
                             String msgDir = gson.toJson(dir);
-
                             tcp.SendMessage(msgDir);
 
-                        }
-                    else if (x > 2) {
+                        } else if (x > 2) {
 
-                            //Log.e("TAG", "Me muevo derecha");
+
                             Direction dir = new Direction(1);
                             String msgDir = gson.toJson(dir);
                             tcp.SendMessage(msgDir);
-
                         } else {
-                            // shoot.setVisibility(View.VISIBLE);
-                            //superShoot.setVisibility(View.VISIBLE);
-                            //Log.e("TAG", "onSensorChanged: ni izquierda ni derecha ");
+
                             Direction dir = new Direction(0);
                             String msgDir = gson.toJson(dir);
                             tcp.SendMessage(msgDir);
 
-                        }try {
-                            Thread.sleep(100);
+                        }
+                        try {
+                            Thread.sleep(40);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
 
                     }
 
-                    ).start();
+            ).start();
 
                     new Thread(
 
                             ()->{
 
                                 try {
-                                    Thread.sleep(100);
+                                    Thread.sleep(40);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
