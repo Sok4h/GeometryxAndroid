@@ -37,7 +37,7 @@
         android:background="@drawable/input"
         android:ems="10"
         android:hint="IP"
-        android:inputType="none|text"
+        android:inputType="none|phone"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
