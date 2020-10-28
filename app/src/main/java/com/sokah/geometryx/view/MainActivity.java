@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,11 +30,16 @@ public class MainActivity extends AppCompatActivity implements OnMessageListener
         start.setOnClickListener(
 
                 (v)->{
+                    if(ip.getText().toString().isEmpty()||port.getText().toString().isEmpty()){
 
-                    Intent intent = new Intent(this, SelectActivity.class);
-                   tcp.SetIP_Port(ip.getText().toString(),Integer.parseInt(port.getText().toString()));
-                   //tcp.SetIP_Port("192.168.0.11",5000);
-                    startActivity(intent);
+                        Toast.makeText(this, "Por favor complete todos los campos", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Intent intent = new Intent(this, SelectActivity.class);
+                        tcp.SetIP_Port(ip.getText().toString(), Integer.parseInt(port.getText().toString()));
+                        //tcp.SetIP_Port("192.168.0.11",5000);
+                        startActivity(intent);
+                    }
 
                 }
         );
