@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -97,49 +98,48 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.buttonReady:
 
                 Gson gson= new Gson();
+                if(inputName.getText().toString().isEmpty()){
 
-                switch (currentSpaceShip){
+                    Toast.makeText(this, "Por favor ingrese un nombre", Toast.LENGTH_SHORT).show();
 
-                    case 0:
-
-                         name = inputName.getText().toString();
-
-                        user = new User(name,0);
-                        message = gson.toJson(user);
-                        tcp.SendMessage(message);
-                        Log.e("TAG", "Azul" );
-
-                        break;
-                    case 1:
-                         name = inputName.getText().toString();
-                         user = new User(name,1);
-                        Log.e("TAG", "NARANJA" );
-                        message = gson.toJson(user);
-                        tcp.SendMessage(message);
-                        break;
-                    case 2:
-                        name = inputName.getText().toString();
-                        user = new User(name,2);
-                        Log.e("TAG", "morado" );
-                        message = gson.toJson(user);
-                        tcp.SendMessage(message);
-                        break;
-                    case 3:
-                        name = inputName.getText().toString();
-                        Log.e("TAG", String.valueOf(currentSpaceShip));
-                        user = new User(name,3);
-                        message = gson.toJson(user);
-                        tcp.SendMessage(message);
-                        break;
                 }
+                else {
+                    switch (currentSpaceShip) {
 
+                        case 0:
 
+                            name = inputName.getText().toString();
 
+                            user = new User(name, 0);
+                            message = gson.toJson(user);
+                            tcp.SendMessage(message);
+                            Log.e("TAG", "Azul");
 
-                Intent intent = new Intent(this, LoadingActivity.class);
-                startActivity(intent);
-               // Log.e("TAG", "onClick:  button" );
-                break;
+                            break;
+                        case 1:
+                            name = inputName.getText().toString();
+                            user = new User(name, 1);
+                            Log.e("TAG", "NARANJA");
+                            message = gson.toJson(user);
+                            tcp.SendMessage(message);
+                            break;
+                        case 2:
+                            name = inputName.getText().toString();
+                            user = new User(name, 2);
+                            Log.e("TAG", "morado");
+                            message = gson.toJson(user);
+                            tcp.SendMessage(message);
+                            break;
+                        case 3:
+                            name = inputName.getText().toString();
+                            Log.e("TAG", String.valueOf(currentSpaceShip));
+                            user = new User(name, 3);
+                            message = gson.toJson(user);
+                            tcp.SendMessage(message);
+                            break;
+                    }
+
+                }
             default:
 
                 break;

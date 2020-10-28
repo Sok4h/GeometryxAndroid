@@ -45,7 +45,6 @@ public class GameActivity extends AppCompatActivity implements OnMessageListener
         acelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, acelerometer, SensorManager.SENSOR_DELAY_GAME);
         if (acelerometer == null) {
-
             Log.e("TAG", "paila el sensor");
         }
         setContentView(R.layout.activity_game);
