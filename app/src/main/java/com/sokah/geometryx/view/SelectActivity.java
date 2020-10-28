@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.sokah.geometryx.events.OnMessageListener;
 import com.sokah.geometryx.R;
 import com.sokah.geometryx.comunnication.TCP_Singleton;
+import com.sokah.geometryx.model.Confirmation;
 import com.sokah.geometryx.model.User;
 
 public class SelectActivity extends AppCompatActivity implements View.OnClickListener, OnMessageListener {
@@ -101,9 +102,9 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
                 if(inputName.getText().toString().isEmpty()){
 
                     Toast.makeText(this, "Por favor ingrese un nombre", Toast.LENGTH_SHORT).show();
-
+                    break;
                 }
-                else {
+
                     switch (currentSpaceShip) {
 
                         case 0:
@@ -139,10 +140,8 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
                             break;
                     }
 
-                }
-            default:
-
-                break;
+                Intent intent= new Intent(this, LoadingActivity.class);
+                startActivity(intent);
 
         }
     }
