@@ -142,7 +142,6 @@ public class SelectActivity extends AppCompatActivity implements View.OnClickLis
 
                 Intent intent= new Intent(this, LoadingActivity.class);
                 startActivity(intent);
-
         }
     }
 
